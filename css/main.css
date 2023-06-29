@@ -1,0 +1,65 @@
+:root {
+	--main-bg: black;
+	--main-color: white;
+	--main-link-color: yellow;
+	--main-button-bg: blue;
+	--main-button-color: white;
+	--main-inset: #121212;
+	--main-border-radius: 10px;
+	--main-padding: 20px;
+	--small--padding: calc(var(--main-padding) / 2);
+}
+html, body {
+	background: var(--main-bg);
+	font-family: sans-serif;
+	color: var(--main-color);
+}
+h1 {
+	font-weight: 100;
+	padding: var(--main-padding);
+}
+a {
+	color: var(--main-link-color);
+}
+.description {
+	padding: var(--main-padding);
+}
+#request {
+	display: inline-block;
+	text-decoration: none;
+	margin: var(--main-padding);
+	background: var(--main-button-bg);
+	color: var(--main-button-color);
+	border: 0;
+	text-transform: uppercase;
+	padding: var(--main-padding);
+	border-radius: var(--main-border-radius);
+}
+#result {
+	display: none;
+	width: 300px;
+	background: #121212;
+	padding: var(--small--padding);
+	margin: 40px var(--small--padding);
+	border-radius: var(--main-border-radius);
+	font-family: monospace;
+	font-size: 0.9em;
+}
+#access-token {
+	display: none;
+	position: relative;
+	background: var(--main-inset);
+	font-family: monospace;
+	border-radius: 3px;
+	padding: var(--small--padding);
+	padding-top: 20px;
+	margin: var(--main-padding);
+}
+#access-token:before {
+	content: "token:";
+	position: absolute;
+	font-size: 9px;
+	color: #9c9b9b;
+	top: 3px;
+	left: 3px;
+}
