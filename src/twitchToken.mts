@@ -5,7 +5,11 @@ const StorageKey = 'twitchState';
 const ClientID = 'c27ufnb754plcjr10uez68huahputt';
 // enables reading of chats, reading of the stream key and the broadcast id
 // so enough to get twitch chat inbound and start a stream automatically
-const Scope = 'chat:read channel:read:stream_key user:read:broadcast';
+
+// const Scope = 'chat:read channel:read:stream_key user:read:broadcast';
+const Scope = 'chat:read chat:edit channel:read:stream_key user:read:broadcast';
+// const Scope = 'chat:read channel:read:stream_key user:read:broadcast';
+// const Scope = 'chat:read channel:read:stream_key user:read:broadcast';
 
 const requestAnchor = document.getElementById('request') as HTMLAnchorElement;
 if (!requestAnchor) {
