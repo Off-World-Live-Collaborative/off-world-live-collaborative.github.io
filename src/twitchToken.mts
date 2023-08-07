@@ -5,7 +5,7 @@ const StorageKey = 'twitchState';
 const ClientID = 'c27ufnb754plcjr10uez68huahputt';
 // enables reading of chats, reading of the stream key and the broadcast id
 // so enough to get twitch chat inbound and start a stream automatically
-const Scope = 'chat:read channel:read:stream_key user:read:broadcast';
+const Scope = 'chat:read chat:edit channel:read:stream_key user:read:broadcast';
 
 const requestAnchor = document.getElementById('request') as HTMLAnchorElement;
 if (!requestAnchor) {
@@ -46,10 +46,10 @@ const setupRequestLink = () => {
 	window.sessionStorage.setItem(StorageKey, stateHex);
 	const thisUrl = `${document.location.origin}${document.location.pathname}`;
 	console.debug('redirect_uri', thisUrl);
-	requestAnchor.href = "https://id.twitch.tv/oauth2/authorize?response_type=token" + 
-		`&client_id=${ClientID}` + 
+	requestAnchor.href = "https://id.twitch.tv/oauth2/authorize?response_type=token" +
+		`&client_id=${ClientID}` +
 		`&scope=${encodeURIComponent(Scope)}` +
-		`&redirect_uri=${encodeURIComponent(thisUrl)}` + 
+		`&redirect_uri=${encodeURIComponent(thisUrl)}` +
 		`&state=${stateHex}`;
 	requestAnchor.innerText = 'Get Access Token';
 }
@@ -60,9 +60,9 @@ const launch = async () => {
 		requestAnchor.style.display = 'none';
 		await handleValidation(fragment);
 		return;
-	} 
+	}
 
 	setupRequestLink();
 }
 
-launch().catch(e => console.error(e)); 
+launch().catch(e => console.error(e));

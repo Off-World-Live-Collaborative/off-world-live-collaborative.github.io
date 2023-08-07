@@ -1,7 +1,7 @@
 import { parseTwitchFragment } from "./parseTwitchFragment.mjs";
 const StorageKey = 'twitchState';
 const ClientID = 'c27ufnb754plcjr10uez68huahputt';
-const Scope = 'chat:read channel:read:stream_key user:read:broadcast';
+const Scope = 'chat:read chat:edit channel:read:stream_key user:read:broadcast';
 const requestAnchor = document.getElementById('request');
 if (!requestAnchor) {
     throw Error('Request button not found');
