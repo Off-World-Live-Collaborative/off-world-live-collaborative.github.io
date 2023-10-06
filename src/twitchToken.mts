@@ -3,9 +3,12 @@ import { TwitchFragment, parseTwitchFragment } from "./parseTwitchFragment.mjs";
 const StorageKey = 'twitchState';
 // change this to use your own app
 const ClientID = 'c27ufnb754plcjr10uez68huahputt';
-// enables reading of chats, reading of the stream key and the broadcast id
+// enables reading/sending of chats, reading of the stream key and the broadcast id
 // so enough to get twitch chat inbound and start a stream automatically
-const Scope = 'chat:read chat:edit channel:read:stream_key user:read:broadcast';
+// moderator:read:followers - follow
+// channel:read:subscriptions - subscribe/resub/gifts
+// bits:read - cheer
+const Scope = 'chat:read chat:edit channel:read:stream_key user:read:broadcast moderator:read:followers channel:read:subscriptions bits:rea';
 
 const requestAnchor = document.getElementById('request') as HTMLAnchorElement;
 if (!requestAnchor) {
