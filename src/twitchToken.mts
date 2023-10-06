@@ -8,7 +8,8 @@ const ClientID = 'c27ufnb754plcjr10uez68huahputt';
 // moderator:read:followers - follow
 // channel:read:subscriptions - subscribe/resub/gifts
 // bits:read - cheer
-const Scope = 'chat:read chat:edit channel:read:stream_key user:read:broadcast moderator:read:followers channel:read:subscriptions bits:rea';
+// channel:manage:redemptions - channel points redeemed reward
+const Scope = 'chat:read chat:edit channel:read:stream_key user:read:broadcast moderator:read:followers channel:read:subscriptions bits:read channel:manage:redemptions';
 
 const requestAnchor = document.getElementById('request') as HTMLAnchorElement;
 if (!requestAnchor) {
