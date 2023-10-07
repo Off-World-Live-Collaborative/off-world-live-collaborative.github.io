@@ -52,6 +52,7 @@ const setupRequestLink = () => {
 	console.debug('redirect_uri', thisUrl);
 	requestAnchor.href = "https://id.twitch.tv/oauth2/authorize?response_type=token" +
 		`&client_id=${ClientID}` +
+		`&force_verify=true` +
 		`&scope=${encodeURIComponent(Scope)}` +
 		`&redirect_uri=${encodeURIComponent(thisUrl)}` +
 		`&state=${stateHex}`;
