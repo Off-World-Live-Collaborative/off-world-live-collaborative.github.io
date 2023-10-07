@@ -49,13 +49,14 @@ const setupRequestLink = () => {
 	const stateHex = [...randomData].map(v => v.toString(16).padStart(2, '0')).join('');
 	window.sessionStorage.setItem(StorageKey, stateHex);
 	const thisUrl = `${document.location.origin}${document.location.pathname}`;
-	console.debug('redirect_uri', thisUrl);
+	// console.debug('redirect_uri', thisUrl);
 	requestAnchor.href = "https://id.twitch.tv/oauth2/authorize?response_type=token" +
 		`&client_id=${ClientID}` +
 		`&force_verify=true` +
 		`&scope=${encodeURIComponent(Scope)}` +
 		`&redirect_uri=${encodeURIComponent(thisUrl)}` +
 		`&state=${stateHex}`;
+	console.debug('href', requestAnchor.href);
 	requestAnchor.innerText = 'Get Access Token';
 }
 
