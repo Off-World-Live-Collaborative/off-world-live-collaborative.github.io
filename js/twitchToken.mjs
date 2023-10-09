@@ -1,7 +1,6 @@
 import { parseTwitchFragment } from "./parseTwitchFragment.mjs";
 const StorageKey = 'twitchState';
 const ClientID = 'c27ufnb754plcjr10uez68huahputt';
-const Scope = 'chat:read chat:edit channel:read:stream_key user:read:broadcast moderator:read:followers channel:read:subscriptions bits:read channel:manage:redemptions';
 const requestAnchor = document.getElementById('request');
 if (!requestAnchor) {
     throw Error('Request button not found');
@@ -15,6 +14,40 @@ if (!result)
 const setResult = (t) => {
     result.style.display = 'inline-block';
     result.innerText = t;
+};
+const getScope = () => {
+    let scope = 'channel:read:stream_key user:read:broadcast ';
+    const chatRead = document.getElementById('chat-read');
+    if (!chatRead)
+        throw Error('chat-read input not found');
+    if (chatRead.checked)
+        scope += 'chat:read ';
+    const chatSend = document.getElementById('chat-send');
+    if (!chatSend)
+        throw Error('chat-send input not found');
+    if (chatSend.checked)
+        scope += 'chat:edit ';
+    const follow = document.getElementById('follow');
+    if (!follow)
+        throw Error('follow input not found');
+    if (follow.checked)
+        scope += 'moderator:read:followers ';
+    const subscribe = document.getElementById('subscribe');
+    if (!subscribe)
+        throw Error('subscribe input not found');
+    if (subscribe.checked)
+        scope += 'channel:read:subscriptions ';
+    const cheer = document.getElementById('cheer');
+    if (!cheer)
+        throw Error('cheer input not found');
+    if (cheer.checked)
+        scope += 'bits:read ';
+    const redeem = document.getElementById('redeem');
+    if (!redeem)
+        throw Error('redeem input not found');
+    if (redeem.checked)
+        scope += 'channel:manage:redemptions ';
+    return scope.slice(0, -1);
 };
 const handleValidation = async ({ accessToken, state }) => {
     const savedState = window.sessionStorage.getItem(StorageKey);
@@ -40,7 +73,7 @@ const setupRequestLink = () => {
     console.debug('redirect_uri', thisUrl);
     requestAnchor.href = "https://id.twitch.tv/oauth2/authorize?response_type=token" +
         `&client_id=${ClientID}` +
-        `&scope=${encodeURIComponent(Scope)}` +
+        `&scope=${encodeURIComponent(getScope())}` +
         `&redirect_uri=${encodeURIComponent(thisUrl)}` +
         `&state=${stateHex}`;
     requestAnchor.innerText = 'Get Access Token';

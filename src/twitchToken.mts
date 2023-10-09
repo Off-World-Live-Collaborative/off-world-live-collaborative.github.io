@@ -3,13 +3,6 @@ import { TwitchFragment, parseTwitchFragment } from "./parseTwitchFragment.mjs";
 const StorageKey = 'twitchState';
 // change this to use your own app
 const ClientID = 'c27ufnb754plcjr10uez68huahputt';
-// enables reading/sending of chats, reading of the stream key and the broadcast id
-// so enough to get twitch chat inbound and start a stream automatically
-// moderator:read:followers - follow
-// channel:read:subscriptions - subscribe/resub/gifts
-// bits:read - cheer
-// channel:manage:redemptions - redeemed reward with channel points
-const Scope = 'chat:read chat:edit channel:read:stream_key user:read:broadcast moderator:read:followers channel:read:subscriptions bits:read channel:manage:redemptions';
 
 const requestAnchor = document.getElementById('request') as HTMLAnchorElement;
 if (!requestAnchor) {
@@ -24,6 +17,43 @@ if (!result) throw Error('Result container not found');
 const setResult = (t: string) => {
 	result.style.display = 'inline-block';
 	result.innerText = t;
+}
+
+const getScope = (): string => {
+	let scope = 'channel:read:stream_key user:read:broadcast ';
+
+	// Reading Chat
+	const chatRead = document.getElementById('chat-read') as HTMLInputElement;
+	if (!chatRead) throw Error('chat-read input not found');
+	if (chatRead.checked) scope += 'chat:read ';
+
+	// Sending Chat
+	const chatSend = document.getElementById('chat-send') as HTMLInputElement;
+	if (!chatSend) throw Error('chat-send input not found');
+	if (chatSend.checked) scope += 'chat:edit ';
+
+	// Follow
+	const follow = document.getElementById('follow') as HTMLInputElement;
+	if (!follow) throw Error('follow input not found');
+	if (follow.checked) scope += 'moderator:read:followers ';
+
+	// Subscription/Resub/Gift
+	const subscribe = document.getElementById('subscribe') as HTMLInputElement;
+	if (!subscribe) throw Error('subscribe input not found');
+	if (subscribe.checked) scope += 'channel:read:subscriptions ';
+
+	// Cheer
+	const cheer = document.getElementById('cheer') as HTMLInputElement;
+	if (!cheer) throw Error('cheer input not found');
+	if (cheer.checked) scope += 'bits:read ';
+
+	// Redeem Channel Reward
+	const redeem = document.getElementById('redeem') as HTMLInputElement;
+	if (!redeem) throw Error('redeem input not found');
+	if (redeem.checked) scope += 'channel:manage:redemptions ';
+
+	// Remove trailing whitespace
+	return scope.slice(0, -1);
 }
 
 const handleValidation = async ({accessToken, state}: TwitchFragment) => {
@@ -52,7 +82,7 @@ const setupRequestLink = () => {
 	console.debug('redirect_uri', thisUrl);
 	requestAnchor.href = "https://id.twitch.tv/oauth2/authorize?response_type=token" +
 		`&client_id=${ClientID}` +
-		`&scope=${encodeURIComponent(Scope)}` +
+		`&scope=${encodeURIComponent(getScope())}` +
 		`&redirect_uri=${encodeURIComponent(thisUrl)}` +
 		`&state=${stateHex}`;
 	requestAnchor.innerText = 'Get Access Token';

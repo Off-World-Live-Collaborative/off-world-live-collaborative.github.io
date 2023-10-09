@@ -22,6 +22,8 @@ a {
 	color: var(--main-link-color);
 }
 .description {
+	font-size: larger;
+	margin: 0 1em 1em 1em;
 	padding: var(--main-padding);
 }
 #request {
