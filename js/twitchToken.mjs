@@ -8,6 +8,9 @@ if (!requestAnchor) {
 const tokenContainer = document.getElementById('access-token');
 if (!tokenContainer)
     throw Error('Token container not found');
+const selection = document.getElementById('selection');
+if (!selection)
+    throw Error('selection container not found');
 const result = document.getElementById('result');
 if (!result)
     throw Error('Result container not found');
@@ -82,6 +85,7 @@ const launch = async () => {
     const fragment = parseTwitchFragment();
     if (fragment) {
         requestAnchor.style.display = 'none';
+        selection.style.display = 'none';
         await handleValidation(fragment);
         return;
     }

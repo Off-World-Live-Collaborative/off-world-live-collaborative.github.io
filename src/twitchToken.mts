@@ -10,9 +10,10 @@ if (!requestAnchor) {
 }
 const tokenContainer = document.getElementById('access-token') as HTMLDivElement;
 if (!tokenContainer) throw Error('Token container not found');
+const selection = document.getElementById('selection') as HTMLDivElement;
+if (!selection) throw Error('selection container not found');
 const result = document.getElementById('result') as HTMLDivElement;
 if (!result) throw Error('Result container not found');
-
 
 const setResult = (t: string) => {
 	result.style.display = 'inline-block';
@@ -92,6 +93,7 @@ const launch = async () => {
 	const fragment = parseTwitchFragment();
 	if (fragment) {
 		requestAnchor.style.display = 'none';
+		selection.style.display = 'none'
 		await handleValidation(fragment);
 		return;
 	}
