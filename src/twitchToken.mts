@@ -3,6 +3,7 @@ import { TwitchFragment, parseTwitchFragment } from "./parseTwitchFragment.mjs";
 const StorageKey = 'twitchState';
 // change this to use your own app
 const ClientID = 'c27ufnb754plcjr10uez68huahputt';
+const CheckboxIds = ['chat-read', 'chat-send', 'follow', 'subscribe', 'cheer', 'redeem'];
 
 const requestAnchor = document.getElementById('request') as HTMLAnchorElement;
 if (!requestAnchor) {
@@ -23,35 +24,9 @@ const setResult = (t: string) => {
 const getScope = (): string => {
 	let scope = 'channel:read:stream_key user:read:broadcast ';
 
-	// Reading Chat
-	const chatRead = document.getElementById('chat-read') as HTMLInputElement;
-	if (!chatRead) throw Error('chat-read input not found');
-	if (chatRead.checked) scope += 'chat:read ';
-
-	// Sending Chat
-	const chatSend = document.getElementById('chat-send') as HTMLInputElement;
-	if (!chatSend) throw Error('chat-send input not found');
-	if (chatSend.checked) scope += 'chat:edit ';
-
-	// Follow
-	const follow = document.getElementById('follow') as HTMLInputElement;
-	if (!follow) throw Error('follow input not found');
-	if (follow.checked) scope += 'moderator:read:followers ';
-
-	// Subscription/Resub/Gift
-	const subscribe = document.getElementById('subscribe') as HTMLInputElement;
-	if (!subscribe) throw Error('subscribe input not found');
-	if (subscribe.checked) scope += 'channel:read:subscriptions ';
-
-	// Cheer
-	const cheer = document.getElementById('cheer') as HTMLInputElement;
-	if (!cheer) throw Error('cheer input not found');
-	if (cheer.checked) scope += 'bits:read ';
-
-	// Redeem Channel Reward
-	const redeem = document.getElementById('redeem') as HTMLInputElement;
-	if (!redeem) throw Error('redeem input not found');
-	if (redeem.checked) scope += 'channel:manage:redemptions ';
+	for (const [, checkbox] of Checkboxes) {
+		if (checkbox.checked) scope += `${checkbox.value} `
+	}
 
 	// Remove trailing whitespace
 	return scope.slice(0, -1);
@@ -86,9 +61,14 @@ const setupRequestLink = () => {
 		`&scope=${encodeURIComponent(getScope())}` +
 		`&redirect_uri=${encodeURIComponent(thisUrl)}` +
 		`&state=${stateHex}`;
-	// requestAnchor.innerText = 'Get Access Token';
 }
-requestAnchor.addEventListener('click', setupRequestLink, false);
+const Checkboxes = new Map<string, HTMLInputElement>();
+for (const id of CheckboxIds) {
+	const element = document.getElementById(id) as HTMLInputElement;
+	if (!element) throw Error(`${id} input not found`);
+	element.addEventListener('change', setupRequestLink, false);
+	Checkboxes.set(id, element);
+}
 
 const launch = async () => {
 	const fragment = parseTwitchFragment();
@@ -100,7 +80,7 @@ const launch = async () => {
 	}
 
 	requestAnchor.innerText = 'Get Access Token';
-	// setupRequestLink();
+	setupRequestLink();
 }
 
 launch().catch(e => console.error(e));
