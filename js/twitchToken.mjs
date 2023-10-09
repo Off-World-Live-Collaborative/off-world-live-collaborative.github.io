@@ -73,14 +73,13 @@ const setupRequestLink = () => {
     const stateHex = [...randomData].map(v => v.toString(16).padStart(2, '0')).join('');
     window.sessionStorage.setItem(StorageKey, stateHex);
     const thisUrl = `${document.location.origin}${document.location.pathname}`;
-    console.debug('redirect_uri', thisUrl);
     requestAnchor.href = "https://id.twitch.tv/oauth2/authorize?response_type=token" +
         `&client_id=${ClientID}` +
         `&scope=${encodeURIComponent(getScope())}` +
         `&redirect_uri=${encodeURIComponent(thisUrl)}` +
         `&state=${stateHex}`;
-    requestAnchor.innerText = 'Get Access Token';
 };
+requestAnchor.addEventListener('click', setupRequestLink, false);
 const launch = async () => {
     const fragment = parseTwitchFragment();
     if (fragment) {
@@ -89,7 +88,7 @@ const launch = async () => {
         await handleValidation(fragment);
         return;
     }
-    setupRequestLink();
+    requestAnchor.innerText = 'Get Access Token';
 };
 launch().catch(e => console.error(e));
 //# sourceMappingURL=twitchToken.mjs.map
