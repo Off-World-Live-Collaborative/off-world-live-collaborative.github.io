@@ -4,11 +4,34 @@
 		<link href="./css/main.css" rel="stylesheet"  />
 	</head>
 	<body>
-		<h1>VTuber Project - Get Twitch Token</h1> 
-		<div class="description">
-			Use this tool to generate tokens for adding Twitch Chat functionality
-			to the <a href="https://github.com/Off-World-Live-Collaborative/VTuberStudio">VTuber Studio</a> open source project.
-		</div>
+		<h1>OWL Interactive Streamer Plugin - Get Twitch Token</h1> 
+		<fieldset class="description">
+			<legend>Select all the Twitch functionalities you want to recieve blueprint events for (via the plugin):</legend>
+			<div>
+				<input type="checkbox" id="chat-read" value="chat-read" checked/>
+				<label for="chat-read">Reading Chat Messages</label>
+			</div>
+			<div>
+				<input type="checkbox" id="chat-send" value="chat-send" checked/>
+				<label for="chat-send">Sending Chat Messages</label>
+			</div>
+			<div>
+				<input type="checkbox" id="follow" value="follow" checked/>
+				<label for="follow">Receiving Follow</label>
+			</div>
+			<div>
+				<input type="checkbox" id="subscribe" value="subscribe" checked/>
+				<label for="subscribe">Receiving Subscriptions/Resubscriptions/Gift Subscriptions</label>
+			</div>
+			<div>
+				<input type="checkbox" id="cheer" value="cheer" checked/>
+				<label for="cheer">Receiving Cheer</label>
+			</div>
+			<div>
+				<input type="checkbox" id="redeem" value="redeem" checked/>
+				<label for="redeem">Viewer Redeeming Channel Rewards with Channel Points</label>
+			</div>
+		</fieldset>
 		<a href="#" id="request">...loading</a>
 		<div id="result"></div>
 		<div id="access-token" ></div>
